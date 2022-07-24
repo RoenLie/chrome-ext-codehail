@@ -17,7 +17,12 @@
 	"host_permissions": [
 		"*://*/*"
 	],
-	"web_accessible_resources": [],
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	},
+	"sandbox": {
+		"pages": []
+	},
 	"action": {
 		"default_icon": {
 			"16": "/images/code_hail16.png",

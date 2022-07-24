@@ -55,10 +55,6 @@ export const chromeExtension = (): Plugin => {
 			return buildResult;
 		},
 
-		transformIndexHtml(html) {
-			return html.replaceAll('="/', '="');
-		},
-
 		async buildEnd() {
 			const files = await genToArray(getFiles('./background', /\.ts/));
 

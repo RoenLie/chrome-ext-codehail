@@ -17,7 +17,8 @@ export class CHLayoutCmp extends LitElement {
 		<nav class="nav">
 			<div @click=${ () => { router.navigate('/first'); } }>PAGE 1</div>
 			<div @click=${ () => { router.navigate('/first/second'); } }>PAGE 2</div>
-			<div @click=${ () => { router.navigate('/options'); } }>PAGE 3</div>
+			<div @click=${ () => { router.navigate('/editor'); } }>editor</div>
+			<div @click=${ () => { router.navigate('/options'); } }>options</div>
 		</nav>
 
 		<div class="divider"></div>

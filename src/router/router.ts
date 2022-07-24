@@ -3,6 +3,7 @@ import type { ElementAnimation } from '../helpers/animate-registry.js';
 import { clone } from '../helpers/clone.js';
 import { createPromiseResolver } from '../helpers/createPromise.js';
 import { storageHandler } from '../helpers/storageHandler.js';
+import { RouteHistory } from './route-history-base.js';
 
 /* ------------------------------------------------- */
 
@@ -27,50 +28,22 @@ interface InternalRoute {
 
 type RouteElement = Element & { __routeAnimation?: Route['animation']; };
 
-
-/* ------------------------------------------------- */
-
-export class RouteHistory {
-
-	protected history: string[] = [];
-
-	public getRoute() {
-		return storageHandler.getItem('currentRoute', '');
-	}
-
-	public setRoute(route: string) {
-		storageHandler.setItem('currentRoute', route);
-		this.appendHistory(route);
-
-		return route;
-	}
-
-	public appendHistory(route: string) {
-		const history = storageHandler.getItem<string[]>('routeHistory', []);
-		history.push(route);
-
-		storageHandler.setItem('routeHistory', history);
-	}
-
-	public clearHistory() {
-		this.history.length = 0;
-	}
-
-}
-
 /* ------------------------------------------------- */
 
 export class Router {
 
 	protected outlet: Element;
 	protected routes: InternalRoute[];
-	protected history: RouteHistory = new RouteHistory();
+	protected history: RouteHistory;
 	protected baseUrl = location.origin;
 	protected updateComplete = Promise.resolve(true);
 
 
 	constructor() { }
 
+	public setHistorian(historian: RouteHistory) {
+		this.history = historian;
+	}
 
 	public setOutlet(element: Element) {
 		this.outlet = element;
@@ -79,18 +52,19 @@ export class Router {
 			element.shadowRoot?.appendChild(slot);
 		}
 
-		if (this.routes)
-			this.initialize();
+		this.initialize();
 	}
 
 	public setRoutes(routes: Route[]) {
 		this.routes = this.parseRoutes(routes);
 
-		if (this.outlet)
-			this.initialize();
+		this.initialize();
 	}
 
 	protected initialize() {
+		if (!this.routes || !this.outlet || !this.history)
+			return;
+
 		this.history.clearHistory();
 		this.navigate(this.location());
 	}

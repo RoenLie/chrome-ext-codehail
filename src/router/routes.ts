@@ -33,6 +33,16 @@ export const generateRoutes = (el: Element) => {
 					],
 				},
 				{
+					name:      'editor',
+					path:      'editor',
+					component: 'ch-editor-page',
+					animation: {
+						show: getAnimation(el, 'route.show'),
+						hide: getAnimation(el, 'route.hide'),
+					},
+					action: async () => { await import('../pages/editor.page.js'); },
+				},
+				{
 					name:      'options',
 					path:      'options',
 					component: 'ch-options-page',
