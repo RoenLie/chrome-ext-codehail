@@ -1,8 +1,8 @@
 import { CSSResultGroup, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
-import { emitEvent } from '../helpers/emitEvent.js';
-import { watch } from '../helpers/watch.js';
+import { emitEvent } from '../../helpers/emitEvent.js';
+import { watch } from '../../helpers/watch.js';
 import { includeStyle } from './include.styles.js';
 import { requestInclude } from './request';
 /* ------------------------------------------------- */

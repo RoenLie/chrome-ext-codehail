@@ -1,12 +1,23 @@
 {
 	"name": "Code Hail",
 	"description": "Code editor and script runner extension",
-	"version": "1.0",
+	"version": "0.0.1",
 	"manifest_version": 3,
 	"background": {
-		"service_worker": "./dist/background/worker.js",
+		"service_worker": "./background/dist/my-lib.js",
 		"type": "module"
 	},
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"test.js",
+				"webcomponents-bundle.js"
+			]
+		}
+	],
 	"permissions": [
 		"storage",
 		"activeTab",
@@ -17,12 +28,6 @@
 	"host_permissions": [
 		"*://*/*"
 	],
-	"content_security_policy": {
-		"extension_pages": "script-src 'self'; object-src 'self'"
-	},
-	"sandbox": {
-		"pages": []
-	},
 	"action": {
 		"default_icon": {
 			"16": "/images/code_hail16.png",

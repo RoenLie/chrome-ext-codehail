@@ -1,9 +1,9 @@
 import { type PropertyValues, css, html, LitElement } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, query } from 'lit/decorators.js';
 
-import { IncludeComponent } from '../components/include.cmp.js';
+import { CHEditorCmp } from '../components/editor/editor.cmp.js';
 
-IncludeComponent;
+CHEditorCmp;
 /* ------------------------------------------------- */
 
 @customElement('ch-editor-page')
@@ -17,7 +17,7 @@ export class EditorPage extends LitElement {
 
 	public override render() {
 		return html`
-		<es-include src="editor/index.html" allow-scripts></es-include>
+		<ch-editor style="display: grid;"></ch-editor>
 		`;
 	}
 

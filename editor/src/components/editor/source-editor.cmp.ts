@@ -1,16 +1,20 @@
 import loader from '@monaco-editor/loader';
-import { type TemplateResult, css, html, LitElement } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { css, html, LitElement } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { createRef, Ref, ref } from 'lit/directives/ref.js';
 import { type editor } from 'monaco-editor';
 
+/* ------------------------------------------------- */
+
 loader.config({
 	paths: {
-		vs: '../../node_modules/monaco-editor/min/vs',
+		vs: '../../editor/node_modules/monaco-editor/min/vs',
 	},
 });
 
 const monaco = loader.init();
+
+/* ------------------------------------------------- */
 
 @customElement('ch-source-editor')
 export class CHSourceEditorCmp extends LitElement {
@@ -21,13 +25,12 @@ export class CHSourceEditorCmp extends LitElement {
 	}
 
 	public get source() {
-		return this._source;
+		return this.editor?.getValue();
 	}
 
 	@property({ type: Number, attribute: 'max-height' }) public maxHeight = 500;
 	@property({ type: Boolean }) public immediate: boolean;
-	@state() public content: TemplateResult = html``;
-	@state() protected _source = '';
+	protected _source = '';
 
 	private editor: editor.IStandaloneCodeEditor;
 	private editorRef: Ref<HTMLDivElement> = createRef();
@@ -105,9 +108,6 @@ export class CHSourceEditorCmp extends LitElement {
 		this.requestUpdate();
 	}
 
-	private clearContent() {
-		this.content = html``;
-	}
 
 	public override render() {
 		return html`
@@ -121,8 +121,6 @@ export class CHSourceEditorCmp extends LitElement {
 		<div class="editor-wrapper">
 			<div class="editor" ${ ref(this.editorRef) }></div>
 		</div>
-
-		<es-include ></es-include>
 		`;
 	}
 
@@ -138,13 +136,6 @@ export class CHSourceEditorCmp extends LitElement {
 			padding: 8px;
 			gap: 8px;
 		}
-		button {
-			border: 1px solid var(--docs-on-background);
-			outline: none;
-			padding: 8px;
-			background-color: var(--docs-background);
-			color: var(--docs-on-background);
-		}
 		.editor-wrapper {
 			border-radius: 4px;
 			display: grid;
@@ -155,11 +146,6 @@ export class CHSourceEditorCmp extends LitElement {
 		.editor {
 			overflow: hidden;
 			display: grid;
-		}
-		.seperator {
-			height: 1px;
-			background-color: var(--docs-primary-container);
-			box-shadow: 0px 1px 1px var(--docs-primary-container);
 		}
 		.editor .monaco-editor,
 		.editor .overflow-guard {

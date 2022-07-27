@@ -56,20 +56,20 @@ export const chromeExtension = (): Plugin => {
 		},
 
 		async buildEnd() {
-			const files = await genToArray(getFiles('./background', /\.ts/));
+			//const files = await genToArray(getFiles('./background', /\.ts/));
 
-			files.forEach(async path => {
-				let pathInfo = Path.parse(path);
+			//files.forEach(async path => {
+			//	let pathInfo = Path.parse(path);
 
-				let fileContent = Fs.readFileSync(path, { encoding: 'utf8' });
-				let buildResult = await transformWithEsbuild(fileContent, pathInfo.name);
+			//	let fileContent = Fs.readFileSync(path, { encoding: 'utf8' });
+			//	let buildResult = await transformWithEsbuild(fileContent, pathInfo.name);
 
-				let targetDir = Path.resolve('./dist/background');
-				let targetPath = Path.resolve(targetDir, pathInfo.name + '.js');
+			//	let targetDir = Path.resolve('./dist/background');
+			//	let targetPath = Path.resolve(targetDir, pathInfo.name + '.js');
 
-				await Fs.promises.mkdir(targetDir, { recursive: true });
-				Fs.promises.writeFile(targetPath, buildResult.code);
-			});
+			//	await Fs.promises.mkdir(targetDir, { recursive: true });
+			//	Fs.promises.writeFile(targetPath, buildResult.code);
+			//});
 		},
 
 		closeBundle() {
